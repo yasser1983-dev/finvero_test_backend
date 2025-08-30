@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+#  backend:
+#    build: ./backend   # carpeta donde tienes tu Dockerfile del backend
+#    container_name: fastapi-backend
+#    restart: always
+#    depends_on:
+#      - mongodb
+#    ports:
+#      - "8000:8000"
+#    environment:
+#      - MONGODB_URI=mongodb://mongodb:27017/todo_db
+#    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  mongo_data:
