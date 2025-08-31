@@ -60,3 +60,50 @@ frontend/
 
 * Paginación y filtrado en el backend. En lugar de devolver todas las tareas en una sola consulta, se implementó paginación (limit, offset) y filtros. 
 Esto evita que el servidor y el frontend carguen miles de registros de golpe.
+
+### Instalación y ejecuciòn con entorno virtual
+
+1. Clonar el repositorio:
+```bash
+git clone <repo_url>
+cd <repo_name>
+```
+2. Crear y activar un entorno virtual:
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate   # Windows
+```
+3. Instalar dependencias del backend:
+```bash
+pip install -r backend/requirements.txt
+```
+4. Navegar al directorio del frontend e instalar dependencias:
+```bash
+cd frontend
+npm install
+```
+5. Configurar variables de entorno (si es necesario). Crear un archivo `.env` en el directorio raíz del backend con la URL de conexión a MongoDB:
+```
+MONGO_URI=mongodb://localhost:27017
+FRONTEND_ORIGIN=http://localhost:3000
+```
+
+6. Iniciar MongoDB usando docker-compose:
+```bash
+docker-compose up -d
+```
+7. Iniciar el backend:
+```bash
+cd ../backend
+uvicorn app.main:app --reload
+```
+8. Iniciar el frontend:
+```bash
+cd ../frontend
+npm run dev
+```
+9. Acceder a la aplicación en el navegador:
+```bash
+http://localhost:3000
+```
