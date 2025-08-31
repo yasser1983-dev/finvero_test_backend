@@ -44,3 +44,9 @@ para levantar MongoDB y el backend rápidamente.
 * Repositorio: interfaz TaskRepository y dos implementaciones: MongoTaskRepository (producción) e InMemoryTaskRepository (tests). Esto separa persistencia de la lógica de aplicación.
 
 * Frontend (React): UI desacoplada que consume la API vía fetch (archivo api.js). Estado con useState/useEffect.
+
+
+### Ejecutar tests:
+```bash
+ pytest -v
+```

@@ -120,7 +120,7 @@ class InMemoryTaskRepository(TaskRepository):
             "title": data.title,
             "description": data.description,
             "completed": False,
-            "creation_date": datetime.utcnow(),
+            "creation_date": datetime.now(),
         }
         self._data[oid] = doc
         return self._to_out(doc)
