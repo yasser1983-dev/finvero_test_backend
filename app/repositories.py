@@ -12,7 +12,7 @@ from app.schemas import TaskOut, TaskCreate
 
 class TaskRepository(ABC):
     @abstractmethod
-    async def list_tasks(self) -> List[TaskOut]:
+    async def list_tasks(self, skip: int = 0, limit: int = 10) -> List[TaskOut]:
         ...
 
     @abstractmethod
@@ -41,8 +41,12 @@ class MongoTaskRepository(TaskRepository):
             creation_date=doc["creation_date"],
         )
 
-    async def list_tasks(self) -> List[TaskOut]:
-        cursor = self.coll.find({}, sort=[("creation_date", -1)])
+    async def list_tasks(self, skip: int = 0, limit: int = 10) -> List[TaskOut]:
+        cursor = (
+            self.coll.find({}, sort=[("creation_date", -1)])
+            .skip(skip)
+            .limit(limit)
+        )
         return [self._to_out(d) async for d in cursor]
 
     async def create_task(self, data: TaskCreate) -> TaskOut:
@@ -108,10 +112,10 @@ class InMemoryTaskRepository(TaskRepository):
             creation_date=doc["creation_date"],
         )
 
-    async def list_tasks(self) -> List[TaskOut]:
-        # ordenar por fecha de creación descendente
+    async def list_tasks(self, skip: int = 0, limit: int = 10) -> List[TaskOut]:
         docs = sorted(self._data.values(), key=lambda d: d["creation_date"], reverse=True)
-        return [self._to_out(d) for d in docs]
+        sliced = docs[skip: skip + limit]
+        return [self._to_out(d) for d in sliced]
 
     async def create_task(self, data: TaskCreate) -> TaskOut:
         oid = str(ObjectId())

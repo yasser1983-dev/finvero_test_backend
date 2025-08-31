@@ -7,8 +7,12 @@ router = APIRouter(prefix="/tasks", tags=["tasks"])
 
 
 @router.get("/", response_model=list[TaskOut])
-async def list_tasks(repo: TaskRepository = Depends()):
-    return await repo.list_tasks()
+async def list_tasks(
+    skip: int = 0,
+    limit: int = 10,
+    repo: TaskRepository = Depends()
+):
+    return await repo.list_tasks(skip=skip, limit=limit)
 
 
 @router.post("/", response_model=TaskOut, status_code=status.HTTP_201_CREATED)

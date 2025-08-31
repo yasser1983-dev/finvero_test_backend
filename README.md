@@ -3,7 +3,7 @@ Este entregable incluye backend REST con FastAPI,
 frontend en React, pruebas unitarias, 
 justificación de arquitectura y un docker-compose opcional 
 para levantar MongoDB y el backend rápidamente.
-### Estructura del proyecto
+### Estructura de los proyectos de Frontend y Backend
 ```bash
 ├── backend/
 │ ├── app/
@@ -18,10 +18,15 @@ para levantar MongoDB y el backend rápidamente.
 │ ├── requirements.txt
 │ └── Dockerfile
 ├── docker-compose.yml
-└── frontend/
-├── src/
-│ ├── App.jsx
-│ └── api.js
+frontend/
+├─ src/
+│  ├─ api/           # para llamadas al backend
+│  │   └─ tasks.js
+│  ├─ components/
+│  │   ├─ TaskList.jsx
+│  │   ├─ TaskForm.jsx
+│  ├─ App.jsx
+│  └─ main.jsx
 ├── index.html
 ├── package.json
 └── vite.config.js
@@ -50,3 +55,8 @@ para levantar MongoDB y el backend rápidamente.
 ```bash
  pytest -v
 ```
+
+### Manejo de Rendimiento
+
+* Paginación y filtrado en el backend. En lugar de devolver todas las tareas en una sola consulta, se implementó paginación (limit, offset) y filtros. 
+Esto evita que el servidor y el frontend carguen miles de registros de golpe.
